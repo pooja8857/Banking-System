@@ -14,29 +14,33 @@ def test_create_account():
     assert customer.phone_number == "1234567890"
 
     # Account creation test.
-    account = user_use_case.create_account(customer, 100000)
+    account = user_use_case.create_account(customer, 1000)
     assert account is not None
     assert account.customer.customer_id == customer.customer_id
-    assert account.balance == 100000
+    assert account.balance == 1000
 
+def test_get_account_balance(customer_and_account):
+    _, account = customer_and_account
+    initial_balance = account.get_balance()
+    assert initial_balance == 1000
 
 def test_valid_withdraw(customer_and_account):
     _, account = customer_and_account
-    initial_balance = account.get_balance()
-    account.withdraw(10000)
-    assert account.get_balance() == initial_balance - 10000
+    account.withdraw(500)
+    assert account.get_balance() == 500
 
 
 def test_invalid_withdraw(customer_and_account):
     _, account = customer_and_account
-    initial_balance = account.get_balance()
-    with pytest.raises(ValueError) as excinfo:
-        account.withdraw(initial_balance + 1000)
-    assert str(excinfo.value) == "Insufficient funds"
+    result = account.withdraw(1200)
+    assert result == "Insufficient funds"
 
 
 def test_deposit(customer_and_account):
     _, account = customer_and_account
-    initial_balance = account.get_balance()
     account.deposit(100)
-    assert account.get_balance() == initial_balance + 100
+    assert account.get_balance() == 1100
+
+ 
+
+

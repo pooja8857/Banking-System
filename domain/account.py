@@ -16,13 +16,23 @@ class Account:
         self.balance += amount
 
     def withdraw(self, amount):
-        if self.balance >= amount:
-            self.balance -= amount
-        else:
-            raise ValueError("Insufficient funds")
+        try:
+            if self.balance >= amount:
+                self.balance -= amount
+            else:
+                raise ValueError
+        except ValueError as e:
+            print(e)
+            return "Insufficient funds"
+        except Exception as e:
+            print(e)
+            return e    
 
     def get_balance(self):
         return self.balance
+    
+    def get_account_number(self):
+        return self.account_number
 
     @staticmethod
     def get_builder():
@@ -45,7 +55,14 @@ class AccountBuilder:
         return self
 
     def build(self):
-        if not all([self.account_id, self.customer, self.account_number, self.balance]):
-            raise ValueError("Missing required attributes")
-        return Account(self)
+        try:
+            if not all([self.account_id, self.customer, self.account_number, self.balance]):
+                raise ValueError("Missing required attributes")
+            return Account(self)
+        except ValueError as e:
+            print(e)
+            return e
+        except Exception as e:
+            print(e)
+            return e
 

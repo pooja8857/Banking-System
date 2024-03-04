@@ -8,6 +8,6 @@ def customer_and_account():
     # Customer creation.
     customer = user_use_case.create_customer("Test User", "testuser@test.com", "1234567890")
     # Account creation.
-    account = user_use_case.create_account(customer, 100000)
+    account = user_use_case.create_account(customer, 1000)
 
     return customer, account

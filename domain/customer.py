@@ -34,10 +34,17 @@ class CustomerBuilder:
         return self
 
     def set_phone_number(self, phone_number):
-        if len(phone_number) < 10 or len(phone_number) > 13:
-            raise ValueError("invalid phone number")
-        self.phone_number = phone_number
-        return self
+        try:
+            if len(phone_number) < 10 or len(phone_number) > 13:
+                raise ValueError("invalid phone number")
+            self.phone_number = phone_number
+            return self
+        except ValueError as e:
+            print(e)
+            return e
+        except Exception as e:
+            print(e)
+            return e
 
     def build(self):
         return Customer(self)
